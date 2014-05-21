@@ -1,6 +1,6 @@
 secret_number = Number between 1, 10
 
-10 times
+10 times:
   my_number = ask: Choose a number from 1 to 10.
 
   if my_number is secret_number
