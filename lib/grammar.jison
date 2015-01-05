@@ -20,6 +20,8 @@ statement:
 | receiver
 | callWithString
 | callWithBlock
+| times
+| every
 ;
 
 expression:
@@ -72,6 +74,14 @@ number:
 
 if:
   IF expression block            { $$ = new nodes.If($2, $3) }
+;
+
+times:
+  number TIMES block             { $$ = new nodes.Times($1, $3) }
+;
+
+every:
+  EVERY number COLON block             { $$ = new nodes.Every($2, $4) }
 ;
 
 block:
