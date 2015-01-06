@@ -115,8 +115,8 @@ assignment:
 ;
 
 comparison:
-  receiver EQ string             { $$ = new nodes.Comparison($1, '==', $3) }
-| receiver COMP string           { $$ = new nodes.Comparison($1, $2, $3) }
+  receiver COMP string           { $$ = new nodes.Comparison($1, $2, $3) }
+| receiver EQ string             { $$ = new nodes.Comparison($1, '==', $3) }
 ;
 
 %%
