@@ -79,6 +79,10 @@ number:
 
 if:
   IF expression block            { $$ = new nodes.If($2, $3) }
+| IF expression 
+    notlastblock 
+  ELSE 
+    block                        { $$ = new nodes.If($2, $3, $5) }
 ;
 
 times:
@@ -95,6 +99,13 @@ block:
     statements
   DEDENT                         
   END                            { $$ = $3 }
+;
+
+notlastblock:
+  NEWLINE
+  INDENT
+    statements
+  DEDENT                         { $$ = $3 }
 ;
 
 assignment:
