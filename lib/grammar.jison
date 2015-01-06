@@ -81,7 +81,7 @@ times:
 ;
 
 every:
-  EVERY number COLON block             { $$ = new nodes.Every($2, $4) }
+  EVERY number block             { $$ = new nodes.Every($2, $3) }
 ;
 
 block:

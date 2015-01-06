@@ -1,2 +1,2 @@
-every 1sec:
+every 1sec
   write: ping
