@@ -1,0 +1,7 @@
+x = 0
+
+if x is 1
+    write: yay
+else
+    write: nay
+end
