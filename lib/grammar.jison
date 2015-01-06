@@ -22,6 +22,7 @@ statement:
 | callWithBlock
 | times
 | every
+| exit
 ;
 
 expression:
@@ -68,6 +69,10 @@ stringPart:
 | STRING_NAME                    { $$ = new nodes.Call(null, $1, []) }
 ;
 
+exit:
+  EXIT                           { $$ = new nodes.Exit() }
+;
+
 number:
   NUMBER                         { $$ = new nodes.Literal($1) }
 ;
@@ -88,11 +93,14 @@ block:
   NEWLINE
   INDENT
     statements
-  DEDENT                         { $$ = $3 }
+  DEDENT                         
+  END                            { $$ = $3 }
 ;
 
 assignment:
   NAME EQ string                 { $$ = new nodes.Assignment($1, $3) }
+|  NAME GETS call                { $$ = new nodes.Assignment($1, $3) }
+|  NAME GETS callWithString      { $$ = new nodes.Assignment($1, $3) }
 ;
 
 comparison:

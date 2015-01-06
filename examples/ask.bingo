@@ -1,0 +1,4 @@
+write: What is your favourite color?
+x gets ask: >
+
+write: Your favourite color is @x
