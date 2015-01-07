@@ -17,6 +17,8 @@ every 1ms:
   
   if ball x > 100
     ball x = 0
+  end
   
   background draw
   ball draw
+end
