@@ -22,6 +22,7 @@ statement:
 | callWithBlock
 | times
 | every
+| exit
 ;
 
 expression:
@@ -68,12 +69,20 @@ stringPart:
 | STRING_NAME                    { $$ = new nodes.Call(null, $1, []) }
 ;
 
+exit:
+  EXIT                           { $$ = new nodes.Exit() }
+;
+
 number:
   NUMBER                         { $$ = new nodes.Literal($1) }
 ;
 
 if:
   IF expression block            { $$ = new nodes.If($2, $3) }
+| IF expression 
+    notlastblock 
+  ELSE 
+    block                        { $$ = new nodes.If($2, $3, $5) }
 ;
 
 times:
@@ -88,16 +97,26 @@ block:
   NEWLINE
   INDENT
     statements
+  DEDENT                         
+  END                            { $$ = $3 }
+;
+
+notlastblock:
+  NEWLINE
+  INDENT
+    statements
   DEDENT                         { $$ = $3 }
 ;
 
 assignment:
   NAME EQ string                 { $$ = new nodes.Assignment($1, $3) }
+|  NAME GETS call                { $$ = new nodes.Assignment($1, $3) }
+|  NAME GETS callWithString      { $$ = new nodes.Assignment($1, $3) }
 ;
 
 comparison:
-  receiver EQ string             { $$ = new nodes.Comparison($1, '==', $3) }
-| receiver COMP string           { $$ = new nodes.Comparison($1, $2, $3) }
+  receiver COMP string           { $$ = new nodes.Comparison($1, $2, $3) }
+| receiver EQ string             { $$ = new nodes.Comparison($1, '==', $3) }
 ;
 
 %%
